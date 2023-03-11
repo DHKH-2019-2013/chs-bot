@@ -1,17 +1,11 @@
-import chess
-from stockfish import Stockfish
+from flask import Flask
+from config.config import AppConfig
+from controllers.bot import bot
+from controllers.health_check import health_check
 
-board = chess.Board()
+app = Flask(__name__)
 
-stockfish = Stockfish(path="src/utils/stockfish/app.exe")
-stockfish.set_depth(15)
-stockfish.set_skill_level(10)
+app.register_blueprint(bot, url_prefix="/bot")
+app.register_blueprint(health_check)
 
-# player move
-board.push_san("e4")
-# sync player board with stockfish board
-stockfish.set_fen_position(board.fen())
-# set move to board
-board.push_san(stockfish.get_best_move())
-
-print(board)
+app.run(host=AppConfig.host, port=AppConfig.port)
