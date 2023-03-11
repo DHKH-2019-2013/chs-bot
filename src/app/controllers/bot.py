@@ -1,23 +1,39 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from stockfish import Stockfish
 from config.config import AppConfig
 import chess
 
 bot = Blueprint('bot', __name__)
+stockfish = Stockfish(path=AppConfig.stockfish_path)
 
-@bot.route('')
-def show():
-	# board = chess.Board()
+@bot.route("initialize-chass-board", methods=['GET'])
+def getInitializeChessBoard():
+	board = chess.Board()
+	return board.fen()
 
-	# stockfish = Stockfish(path=AppConfig.stockfish_path)
-	# stockfish.set_depth(15)
-	# stockfish.set_skill_level(10)
+@bot.route('move', methods=['GET'])
+def getMove():
+	try:
+		fen = request.args.get("fen")
+		playerMove = request.args.get("move")
+		int = request.args.get("int")
 
-	# # player move
-	# board.push_san("e4")
-	# # sync player board with stockfish board
-	# stockfish.set_fen_position(board.fen())
-	# # set move to board
-	# board.push_san(stockfish.get_best_move())
+		stockfish.set_depth(AppConfig.stockfish_depth)
+		stockfish.set_skill_level(int)
 
-	return "Hello, I am stockfish"
+		board = chess.Board(fen)
+		# player move
+		board.push_san(playerMove)
+		# sync player board with stockfish board
+		stockfish.set_fen_position(board.fen())
+		# set move to board
+		botMove = stockfish.get_best_move()
+		board.push_san(botMove)
+
+		return {
+			"fen": board.fen(),
+			"move": botMove,
+			"isCheckmate": board.is_checkmate()
+		}
+	except:
+		return 'invalidMove', 400
