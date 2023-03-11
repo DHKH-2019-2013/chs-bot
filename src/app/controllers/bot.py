@@ -6,12 +6,12 @@ import chess
 bot = Blueprint('bot', __name__)
 stockfish = Stockfish(path=AppConfig.stockfish_path)
 
-@bot.route("initialize-chess-board", methods=['GET'])
+@bot.route("/initialize-chess-board", methods=['GET'])
 def getInitializeChessBoard():
 	board = chess.Board()
 	return board.fen()
 
-@bot.route('move', methods=['GET'])
+@bot.route('/move', methods=['GET'])
 def getMove():
 	try:
 		fen = request.args.get("fen")
