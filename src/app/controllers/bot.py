@@ -51,6 +51,10 @@ def isValid():
 		move = chess.Move.from_uci(playerMove)
 		board.push_san(board.san(move))
 
-		return "", 200
+		return {
+			"isValidMove": True
+		}, 200
 	except Exception as e:
-		return "invalidMove", 400
+		return {
+			"isValidMove": False
+		}, 400
