@@ -39,3 +39,18 @@ def getMove():
 	except Exception as e:
 		print(e)
 		return 'invalidMove', 400
+
+@bot.route('/check-valid-move', methods=['GET'])
+def isValid():
+	try:
+		fen = request.args.get("fen")
+		playerMove = request.args.get("move")
+
+		board = chess.Board(fen)
+		# player move
+		move = chess.Move.from_uci(playerMove)
+		board.push_san(board.san(move))
+
+		return "", 200
+	except Exception as e:
+		return "invalidMove", 400
