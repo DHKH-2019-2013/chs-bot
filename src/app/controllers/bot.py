@@ -57,4 +57,4 @@ def isValid():
 	except Exception as e:
 		return {
 			"isValidMove": False
-		}, 400
+		}, 200
