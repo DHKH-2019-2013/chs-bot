@@ -23,7 +23,8 @@ def getMove():
 
 		board = chess.Board(fen)
 		# player move
-		board.push_san(playerMove)
+		move = chess.Move.from_uci(playerMove)
+		board.push_san(board.san(move))
 		# sync player board with stockfish board
 		stockfish.set_fen_position(board.fen())
 		# set move to board
@@ -35,5 +36,6 @@ def getMove():
 			"move": botMove,
 			"isCheckmate": board.is_checkmate()
 		}
-	except:
+	except Exception as e:
+		print(e)
 		return 'invalidMove', 400
