@@ -54,7 +54,7 @@ def isValid():
 		return {
 			"fen": board.fen(),
 			"isValidMove": True,
-			"isCheckmate": board.is_checkmate
+			"isCheckmate": board.is_checkmate()
 		}, 200
 	except Exception as e:
 		return {
