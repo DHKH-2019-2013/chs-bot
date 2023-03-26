@@ -13,3 +13,8 @@ How to setup (follow these steps)
 - pip install -r package.txt
 
 - py src/app/app.py
+
+
+###
+uci: e2e4 (current)
+san: Nxe4

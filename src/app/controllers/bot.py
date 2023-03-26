@@ -18,13 +18,13 @@ def getMove():
 		playerMove = request.args.get("move")
 		int = request.args.get("int")
 
+		# initialize stockfish
 		stockfish.set_depth(AppConfig.stockfish_depth)
 		stockfish.set_skill_level(int)
-
+		# initialize board
 		board = chess.Board(fen)
 		# player move
-		move = chess.Move.from_uci(playerMove)
-		board.push_san(board.san(move))
+		board.push_uci(playerMove)
 		# sync player board with stockfish board
 		stockfish.set_fen_position(board.fen())
 		# set move to board
@@ -47,10 +47,10 @@ def isValid():
 		fen = request.args.get("fen")
 		playerMove = request.args.get("move")
 
+		# initialize board
 		board = chess.Board(fen)
 		# player move
-		move = chess.Move.from_uci(playerMove)
-		board.push_san(board.san(move))
+		board.push_uci(playerMove)
 
 		return {
 			"fen": board.fen(),
