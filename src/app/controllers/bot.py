@@ -52,7 +52,9 @@ def isValid():
 		board.push_san(board.san(move))
 
 		return {
-			"isValidMove": True
+			"fen": board.fen(),
+			"isValidMove": True,
+			"isCheckmate": board.is_checkmate
 		}, 200
 	except Exception as e:
 		return {
