@@ -34,7 +34,8 @@ def getMove():
 		return {
 			"fen": board.fen(),
 			"move": botMove,
-			"isCheckmate": board.is_checkmate()
+			"isCheckmate": board.is_checkmate(),
+			"isGameOver": board.is_game_over()
 		}
 	except Exception as e:
 		print(e)
@@ -54,7 +55,8 @@ def isValid():
 		return {
 			"fen": board.fen(),
 			"isValidMove": True,
-			"isCheckmate": board.is_checkmate()
+			"isCheckmate": board.is_checkmate(),
+			"isGameOver": board.is_game_over()
 		}, 200
 	except Exception as e:
 		return {
