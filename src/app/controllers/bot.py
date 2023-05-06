@@ -10,11 +10,11 @@ stockfish = Stockfish(path=AppConfig.stockfish_path)
 def getMove():
 	try:
 		fen = request.args.get("fen")
-		int = request.args.get("int")
+		elo = request.args.get("elo")
 
 		# initialize stockfish
 		stockfish.set_depth(AppConfig.stockfish_depth)
-		stockfish.set_skill_level(int)
+		stockfish.set_elo_rating(elo)
 		# initialize board
 		board = chess.Board(fen)
 		# sync player board with stockfish board
